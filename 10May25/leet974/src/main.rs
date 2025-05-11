@@ -8,13 +8,13 @@ pub fn subarrays_div_by_k(nums: Vec<i32>, k: i32) -> i32 {
 
     for num in nums {
         prefix_sum += num;
-        let mut modulo = prefix_sum % k;
-        if modulo < 0 {
-            modulo += k;
+        let mut rem = prefix_sum % k;
+        if rem < 0 {
+            rem += k;
         }
 
-        result += *mod_count.get(&modulo).unwrap_or(&0);
-        *mod_count.entry(modulo).or_insert(0) += 1;
+        result += *mod_count.get(&rem).unwrap_or(&0);
+        *mod_count.entry(rem).or_insert(0) += 1;
     }
 
     result

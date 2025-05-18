@@ -12,7 +12,6 @@ pub fn subarrays_div_by_k(nums: Vec<i32>, k: i32) -> i32 {
         if rem < 0 {
             rem += k;
         }
-
         result += *mod_count.get(&rem).unwrap_or(&0);
         *mod_count.entry(rem).or_insert(0) += 1;
     }

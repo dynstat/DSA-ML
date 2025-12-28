@@ -59,7 +59,7 @@ class Solution:
             # Base conditon
             if i >= len(nums):
                 return
-            print(temp)
+            # print(temp)
             temp.append(nums[i]) # [1]
             ans.append(temp.copy()) # here temp => []
             rec(temp, i + 1) 

@@ -1,0 +1,93 @@
+from collections import defaultdict
+
+class Solution:
+    def minWindow(self, s: str, t: str) -> str:
+        # expand the window as long as the conditions are not met
+        # shrink the window when the conditions are satisfied 
+
+        if len(s) < 1:
+            print("Input string s is empty.")
+            return ""
+        if len(s) == len(t):
+            print("s and t are of equal length. Comparing directly.")
+            
+            # Sort both strings and store results
+            sorted_s: list[str] = sorted(s)
+            sorted_t: list[str] = sorted(t)
+
+            for i in range(len(s)):
+                if sorted_s[i] != sorted_t[i]:
+                    print(f"Mismatch at index {i}: sorted_s[{i}] = {sorted_s[i]}, sorted_t[{i}] = {sorted_t[i]}")
+                    return ""
+            
+            print("All characters match in sorted form: returning original s =", s)
+            return s
+
+        tmap = defaultdict(int)
+        smap = defaultdict(int)
+        l = 0
+        r = 0
+
+        for tch in t:
+            tmap[tch] += 1
+        print(f"Target frequency map (tmap): {dict(tmap)}")
+
+        for ch in s:
+            if ch in tmap:
+                break
+            else:
+                l += 1
+
+        r = l
+        print(f"Initial pointers set -> Left: {l}, Right: {r}")
+        ans = s + " "
+
+        need = len(t)
+        found = 0
+
+        while l < len(s):
+            print(f"\n**********************")
+            print(f"[Window Start] Left: {l}, Right: {r}, Found: {found}")
+            print(f"Current window substring: '{s[l:r+1]}'")
+            print(f"Current smap: {dict(smap)}")
+            if r < len(s):
+                print(f"Checking s[r] = {s[r]}")
+            else:
+                print("Right pointer out of bounds.")
+
+            print(f"found = {found}, need = {need}")
+
+            if r < len(s) and found < need:
+                if s[r] in tmap:
+                    print(f"s[r] = {s[r]} is in tmap.")
+                    if smap[s[r]] < tmap[s[r]]:
+                        found += 1
+                        print(f"Incremented found to {found}")
+                smap[s[r]] += 1
+                print(f"Updated smap[{s[r]}] = {smap[s[r]]}")
+                r += 1
+            elif found == need:
+                print(f"✅ Valid window found: '{s[l:r]}'")
+                if len(ans) > len(s[l:r]):
+                    ans = s[l:r]
+                    print(f"Updating minimum answer to: '{ans}'")
+                smap[s[l]] -= 1
+                print(f"Decremented smap[{s[l]}] to {smap[s[l]]}")
+                if s[l] in tmap and smap[s[l]] < tmap[s[l]]:
+                    found -= 1
+                    print(f"Decrementing found (now {found}) since we're removing '{s[l]}' from window")
+                l += 1
+            else:
+                print("Breaking out: end of string reached and no further shrinking possible.")
+                break
+
+        if ans != s + " ":
+            print(f"\nFinal Answer: '{ans}'")
+        else:
+            print("\nNo valid window found.")
+        return ans if ans != s + " " else ""
+
+
+if __name__ == "__main__":
+    s = Solution()
+    s.minWindow("ADOBECODEBANC", "ABC")

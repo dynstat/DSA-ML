@@ -4,7 +4,7 @@ This repository contains some random practice programs (leetcode) and implementa
 
 ## Structure
 
-- **DSA/**: Algorithms, data structures, and problem solutions.
-- **ML/**: Machine learning models, scripts, and experiments.
-- **old/**: Archived or legacy code.
+- [**DSA/**](./DSA): Algorithms, data structures, and problem solutions.
+- [**ML/**](./ML): Machine learning models, scripts, and experiments.
+- [**old/**](./old): Archived or legacy code.
 

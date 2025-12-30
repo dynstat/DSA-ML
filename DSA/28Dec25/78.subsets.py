@@ -56,14 +56,19 @@ class Solution:
         ans = []
         
         def backtrack(start, current_subset):
-            # Add the current subset at the start of each call
-            ans.append(current_subset.copy())
+            # Each recursive call represents a node in the decision tree
+            # Add a copy of the current subset to the result list
+            ans.append(current_subset[:]) # or current_subset.copy()
 
-            # Loop through all available numbers starting from 'start'
             for i in range(start, len(nums)):
-                current_subset.append(nums[i])    # Include
-                backtrack(i + 1, current_subset)  # Recurse
-                current_subset.pop()              # Backtrack (Exclude to try next)
+                # Choice: Include nums[i] in the current path
+                current_subset.append(nums[i])
+                
+                # Explore: Move deeper into the tree (e.g., [1] -> [1, 2])
+                backtrack(i + 1, current_subset)
+                
+                # Backtrack: Remove the last element to explore other branches (e.g., [1, 2] -> [1] -> [1, 3])
+                current_subset.pop()
 
         backtrack(0, [])
         return ans

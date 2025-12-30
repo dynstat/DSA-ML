@@ -53,31 +53,49 @@ from typing import *
 # @lc code=start
 class Solution:
     def subsets(self, nums: List[int]) -> List[List[int]]:
-        # Initialize the result list with an empty subset
-        ans = [[]]
-        # Temporary list to track the current subset during recursion
-        temp_list = []
+        ans = []
+        
+        def backtrack(start, current_subset):
+            # Add the current subset at the start of each call
+            ans.append(current_subset.copy())
 
-        def rec(temp, i):
-            # Base case: if we've considered all elements, stop recursion
-            if i >= len(nums):
-                return
-            
-            # Include the current element in the subset
-            temp.append(nums[i])
-            # Add the current subset configuration to the final answer
-            ans.append(temp.copy())
-            
-            # Recurse to include elements following the current one
-            rec(temp, i + 1) 
-            
-            # Backtrack: remove the current element to explore subsets without it
-            temp.pop()
-            # Recurse skipping the current element to find subsets starting from the next index
-            rec(temp, i + 1)
+            # Loop through all available numbers starting from 'start'
+            for i in range(start, len(nums)):
+                current_subset.append(nums[i])    # Include
+                backtrack(i + 1, current_subset)  # Recurse
+                current_subset.pop()              # Backtrack (Exclude to try next)
 
-        # Start recursion from the first index
-        rec(temp_list, 0)
+        backtrack(0, [])
         return ans
+
+
+    # def subsets_old(self, nums: List[int]) -> List[List[int]]:
+    #     # Initialize the result list with an empty subset
+    #     ans = [[]]
+    #     # Temporary list to track the current subset during recursion
+    #     temp_list = []
+
+    #     def rec(temp, i):
+    #         # Base case: if we've considered all elements, stop recursion
+    #         if i >= len(nums):
+    #             return
+            
+    #         # Include the current element in the subset
+    #         temp.append(nums[i])
+    #         # Add the current subset configuration to the final answer
+    #         ans.append(temp.copy())
+            
+    #         # Recurse to include elements following the current one
+    #         rec(temp, i + 1) 
+            
+    #         # Backtrack: remove the current element to explore subsets without it
+    #         temp.pop()
+    #         # Recurse skipping the current element to find subsets starting from the next index
+    #         rec(temp, i + 1)
+
+    #     # Start recursion from the first index
+    #     rec(temp_list, 0)
+    #     return ans
+    
 # @lc code=end
 
